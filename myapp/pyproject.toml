@@ -1,0 +1,19 @@
+[project]
+name = "myapp"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=2.2.3",
+]
+
+[project.optional-dependencies]
+boost = [
+    "catboost>=1.2.5",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.3.3",
+]

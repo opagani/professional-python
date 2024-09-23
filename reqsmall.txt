@@ -1,0 +1,5 @@
+# reqsmall.txt
+pandas
+notebook
+xgboost
+matplotlib
