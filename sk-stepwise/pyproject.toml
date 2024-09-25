@@ -1,0 +1,17 @@
+[project]
+name = "sk-stepwise"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "hyperopt>=0.2.7",
+    "numpy>=2.1.1",
+    "panadas>=0.2",
+    "scikit-learn>=1.5.2",
+    "xgboost>=2.1.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
