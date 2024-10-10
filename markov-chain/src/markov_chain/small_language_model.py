@@ -3,11 +3,11 @@ import random
 
 
 class SmallLanguageModel:
-    def __init__(self):
-        self.markov_chain = {}
-        self.start_characters = []
+    def __init__(self) -> None:
+        self.markov_chain: dict[str, dict[str, float]] = {}
+        self.start_characters: list[str] = []
 
-    def train(self, text):
+    def train(self, text: str) -> None:
         """Train the language model on the given text data."""
         text = text.strip().lower()
         self.start_characters = [sent[0] for sent in text.split(".") if sent.strip()]
@@ -26,7 +26,7 @@ class SmallLanguageModel:
             for next_char, count in next_chars.items():
                 next_chars[next_char] = count / total_count
 
-    def predict_next_character(self, current_char):
+    def predict_next_character(self, current_char: str) -> str:
         """Predict the next character based on the current character."""
         if current_char not in self.markov_chain:
             return random.choice(self.start_characters)
@@ -36,7 +36,7 @@ class SmallLanguageModel:
             list(next_chars.keys()), weights=list(next_chars.values()), k=1
         )[0]
 
-    def generate_text(self, length=100):
+    def generate_text(self, length: int = 100) -> str:
         """Generate text of the specified length."""
         if not self.markov_chain:
             return "Error: Model not trained yet."

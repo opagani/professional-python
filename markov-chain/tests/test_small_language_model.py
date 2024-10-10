@@ -3,7 +3,7 @@ import pytest
 from markov_chain.small_language_model import SmallLanguageModel
 
 
-def test_small_language_model_initialization():
+def test_small_language_model_initialization() -> None:
     """
     Test that SmallLanguageModel initializes with an empty Markov chain dictionary
     and an empty list of start characters.
@@ -37,7 +37,7 @@ def test_small_language_model_initialization():
 # assert model.char_map == {}, "Character map should be initialized as empty."
 
 
-def test_train_method_character_mapping():
+def test_train_method_character_mapping() -> None:
     """
     Test that the train method correctly maps characters to the characters that follow them.
     Use the simple input text "hello" to verify character mappings.
@@ -84,7 +84,7 @@ def test_train_method_character_mapping():
 # pytest test_small_language_model.py
 
 
-def test_predict_method():
+def test_predict_method() -> None:
     model = SmallLanguageModel()
 
     # Train the model with a simple text
@@ -160,7 +160,9 @@ def test_predict_method():
         ),
     ],
 )
-def test_predict_next_character_parametrized(training_text, test_cases):
+def test_predict_next_character_parametrized(
+    training_text: str, test_cases: dict[str, list[str]]
+) -> None:
     """
     Test that the predict_next_character method returns valid next characters
     based on various training data.
@@ -168,16 +170,17 @@ def test_predict_next_character_parametrized(training_text, test_cases):
     model = SmallLanguageModel()
     model.train(training_text)
 
-    for input_char, expected_outcomes in test_cases:
-        predicted_char = model.predict_next_character(input_char)
-        assert predicted_char in expected_outcomes, (
-            f"For input '{input_char}' in text '{training_text}', "
-            f"predicted '{predicted_char}' but expected one of {expected_outcomes}"
-        )
+    if isinstance(test_cases, list):
+        for input_char, expected_outcomes in test_cases:
+            predicted_char = model.predict_next_character(input_char)
+            assert predicted_char in expected_outcomes, (
+                f"For input '{input_char}' in text '{training_text}', "
+                f"predicted '{predicted_char}' but expected one of {expected_outcomes}"
+            )
 
 
 @pytest.fixture
-def trained_model():
+def trained_model() -> SmallLanguageModel:
     """
     Fixture to create and train a SmallLanguageModel instance with default text.
     """
@@ -186,7 +189,7 @@ def trained_model():
     return model
 
 
-def test_model_initialization(trained_model):
+def test_model_initialization(trained_model: SmallLanguageModel) -> None:
     """Test that the model is initialized and trained correctly."""
     assert isinstance(
         trained_model.markov_chain, dict
@@ -211,7 +214,9 @@ def test_model_initialization(trained_model):
         # ("g", []),  # 'g' is the last character, so it might return a start character
     ],
 )
-def test_predict_next_character(trained_model, input_char, expected_outcomes):
+def test_predict_next_character(
+    trained_model: SmallLanguageModel, input_char: str, expected_outcomes: list[str]
+) -> None:
     """Test that predict_next_character returns valid next characters."""
     predicted_char = trained_model.predict_next_character(input_char)
     assert (
