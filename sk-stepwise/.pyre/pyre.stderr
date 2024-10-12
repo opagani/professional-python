@@ -1,0 +1,75 @@
+2024-10-08 11:58:10,996 [PID 2282] INFO No binary specified, looking for `pyre.bin` in PATH
+2024-10-08 11:58:10,996 [PID 2282] INFO Pyre binary is located at `/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/bin/pyre.bin`
+2024-10-08 11:58:10,996 [PID 2282] INFO Could not determine the number of Pyre workers from configuration. Auto-set the value to 11.
+2024-10-08 11:58:10,996 [PID 2282] INFO No typeshed specified, looking for it...
+2024-10-08 11:58:10,996 [PID 2282] INFO Found: `/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed`
+2024-10-08 11:58:10,997 [PID 2282] INFO Writing arguments into /var/folders/cz/958tj1p10ys2ts9wc_77kgm00000gn/T/pyre_arguments_wghx2l9h.json...
+2024-10-08 11:58:10,997 [PID 2282] DEBUG Arguments:
+{
+  "source_paths": {
+    "kind": "simple",
+    "paths": [
+      "/Users/oscarpagani/projects/professional-python/sk-stepwise/src",
+      "/Users/oscarpagani/projects/professional-python/sk-stepwise/tests"
+    ]
+  },
+  "search_paths": [
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stdlib",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/ExifRead",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/Pillow",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/PyMySQL",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/PyYAML",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/aiofiles",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/boto",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/chevron",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/colorama",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/ldap3",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/mysqlclient",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/paramiko",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/psycopg2",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/pycurl",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/python-dateutil",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/pytz",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/regex",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/requests",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/retry",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/tqdm",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/.venv/lib/pyre_check/typeshed/stubs/ujson"
+  ],
+  "excludes": [],
+  "checked_directory_allowlist": [
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/tests",
+    "/Users/oscarpagani/projects/professional-python/sk-stepwise/src"
+  ],
+  "checked_directory_blocklist": [],
+  "extensions": [],
+  "log_path": "/Users/oscarpagani/projects/professional-python/sk-stepwise/.pyre",
+  "global_root": "/Users/oscarpagani/projects/professional-python/sk-stepwise",
+  "debug": false,
+  "python_version": {
+    "major": 3,
+    "minor": 12,
+    "micro": 6
+  },
+  "shared_memory": {},
+  "parallel": true,
+  "number_of_workers": 11,
+  "additional_logging_sections": [],
+  "show_error_traces": false,
+  "strict": false
+}
+2024-10-08 11:58:14,966 [PID 2282] INFO  Initializing shared memory (heap_size: 8589934592, dep_table_pow: 1, hash_table_pow: 26)
+2024-10-08 11:58:14,991 [PID 2282] INFO  Building module tracker...
+2024-10-08 11:58:15,016 [PID 2282] PERFORMANCE  Module tracker built: 0.029s
+2024-10-08 11:58:15,079 [PID 2282] PERFORMANCE  Full environment built: 0.090s
+2024-10-08 11:58:15,079 [PID 2282] INFO  Collecting all definitions...
+2024-10-08 11:58:15,079 [PID 2282] PERFORMANCE  Collected definitions (defines: 18): 0.006s
+2024-10-08 11:58:15,079 [PID 2282] INFO  Checking 18 functions...
+2024-10-08 11:58:15,201 [PID 2282] INFO  Processed 18 of 18 functions
+2024-10-08 11:58:15,201 [PID 2282] PERFORMANCE  Check_TypeCheck: 0.122s
+2024-10-08 11:58:15,201 [PID 2282] MEMORY  Shared memory size post-typecheck (size: 0)
+2024-10-08 11:58:15,201 [PID 2282] INFO  Postprocessing 4 sources...
+2024-10-08 11:58:15,201 [PID 2282] INFO  Postprocessed 4 of 4 sources
+2024-10-08 11:58:15,201 [PID 2282] PERFORMANCE  Check_Postprocessing: 0.002s
+2024-10-08 11:58:15,201 [PID 2282] PERFORMANCE  Check (request kind: FullCheck): 0.221s
+2024-10-08 11:58:15,227 [PID 2282] ERROR Found 16 type errors!

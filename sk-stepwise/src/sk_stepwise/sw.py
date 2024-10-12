@@ -2,32 +2,62 @@ import numpy as np
 from sklearn.base import BaseEstimator, MetaEstimatorMixin
 from sklearn.model_selection import cross_val_score
 from hyperopt import fmin, tpe, space_eval, Trials
+import pandas as pd
+
+# From typing
+from typing import Self, TypeAlias, Any, Protocol
+from scipy.sparse import spmatrix
+import numpy.typing
+from numpy import floating
+from hyperopt import hp
+from collections.abc import Callable
+from hyperopt.pyll.base import SymbolTable
+
+MatrixLike: TypeAlias = np.ndarray | pd.DataFrame | spmatrix
+ArrayLike: TypeAlias = numpy.typing.ArrayLike
+
+PARAM = int | float | str | bool
+
+from typing import Protocol
+
+
+class _Fitable(Protocol):
+    def fit(self, X: MatrixLike, y: ArrayLike) -> Self: ...
+
+    def predict(self, X: MatrixLike) -> ArrayLike: ...
+
+    # def set_params(self, **params: dict[str, PARAM]) -> Self: ...
+
+    def set_params(self, **params: PARAM) -> Self: ...
+
+    def score(self, X: MatrixLike, y: ArrayLike) -> float: ...
 
 
 class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
     def __init__(
         self,
-        model,
-        param_space_sequence,
-        max_evals_per_step=100,
-        cv=5,
-        scoring="neg_mean_squared_error",
-        random_state=42,
-    ):
+        model: _Fitable,
+        param_space_sequence: list[dict[str, PARAM | SymbolTable]],
+        max_evals_per_step: int = 100,
+        cv: int = 5,
+        scoring: str
+        | Callable[[ArrayLike, ArrayLike], float] = "neg_mean_squared_error",
+        random_state: int = 42,
+    ) -> None:
         self.model = model
         self.param_space_sequence = param_space_sequence
         self.max_evals_per_step = max_evals_per_step
         self.cv = cv
         self.scoring = scoring
         self.random_state = random_state
-        self.best_params_ = {}
+        self.best_params_: dict[str, PARAM] = {}
         self.best_score_ = None
 
-    def clean_int_params(self, params):
+    def clean_int_params(self, params: dict[str, PARAM]) -> dict[str, PARAM]:
         int_vals = ["max_depth", "reg_alpha"]
         return {k: int(v) if k in int_vals else v for k, v in params.items()}
 
-    def objective(self, params):
+    def objective(self, params: dict[str, PARAM]) -> float:
         # I added this
         params = self.clean_int_params(params)
         # END
@@ -38,7 +68,7 @@ class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
         )
         return -np.mean(score)
 
-    def fit(self, X, y):
+    def fit(self, X: pd.DataFrame, y: pd.Series) -> Self:
         self.X = X
         self.y = y
 
@@ -71,8 +101,8 @@ class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
 
         return self
 
-    def predict(self, X):
+    def predict(self, X: pd.DataFrame) -> ArrayLike:
         return self.model.predict(X)
 
-    def score(self, X, y):
+    def score(self, X: pd.DataFrame, y: pd.Series) -> float:
         return self.model.score(X, y)

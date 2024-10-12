@@ -2,7 +2,7 @@ import sk_stepwise.sw as sw
 import pytest
 
 
-def test_initialization():
+def test_initialization() -> None:
     print("test_initialization")
     print(dir(sw))
     model = None
@@ -18,7 +18,7 @@ def test_initialization():
 #     assert sw.hello() == "Hello from sk-stepwise!"
 
 
-def test_that_fails():
+def test_that_fails() -> None:
     ages = [1, 2, 3, 4, 5]
     name = "suzzie"
     rounds = []
@@ -30,7 +30,7 @@ def test_with_exception(one):
 
 
 @pytest.mark.xfail(raises=TypeError)
-def test_logistic():
+def test_logistic() -> None:
     from sklearn import linear_model
 
     model = linear_model.LinearRegression()
@@ -42,5 +42,5 @@ def test_logistic():
 
 
 @pytest.mark.matt
-def test_matt():
+def test_matt() -> None:
     assert 1 == 1
