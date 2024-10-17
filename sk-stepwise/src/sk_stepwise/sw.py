@@ -5,11 +5,9 @@ from hyperopt import fmin, tpe, space_eval, Trials
 import pandas as pd
 
 # From typing
-from typing import Self, TypeAlias, Any, Protocol
+from typing import Self, TypeAlias, Protocol
 from scipy.sparse import spmatrix
 import numpy.typing
-from numpy import floating
-from hyperopt import hp
 from collections.abc import Callable
 from hyperopt.pyll.base import SymbolTable
 
@@ -17,8 +15,6 @@ MatrixLike: TypeAlias = np.ndarray | pd.DataFrame | spmatrix
 ArrayLike: TypeAlias = numpy.typing.ArrayLike
 
 PARAM = int | float | str | bool
-
-from typing import Protocol
 
 
 class _Fitable(Protocol):
@@ -30,18 +26,26 @@ class _Fitable(Protocol):
 
     def set_params(self, **params: PARAM) -> Self: ...
 
-    def score(self, X: MatrixLike, y: ArrayLike) -> float: ...
+    def score(
+        self, X: MatrixLike, y: ArrayLike
+    ) -> float: ...
 
 
-class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
+class StepwiseHyperoptOptimizer(
+    BaseEstimator, MetaEstimatorMixin
+):
     def __init__(
         self,
         model: _Fitable,
-        param_space_sequence: list[dict[str, PARAM | SymbolTable]],
+        param_space_sequence: list[
+            dict[str, PARAM | SymbolTable]
+        ],
         max_evals_per_step: int = 100,
         cv: int = 5,
         scoring: str
-        | Callable[[ArrayLike, ArrayLike], float] = "neg_mean_squared_error",
+        | Callable[
+            [ArrayLike, ArrayLike], float
+        ] = 'neg_mean_squared_error',
         random_state: int = 42,
     ) -> None:
         self.model = model
@@ -53,9 +57,14 @@ class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
         self.best_params_: dict[str, PARAM] = {}
         self.best_score_ = None
 
-    def clean_int_params(self, params: dict[str, PARAM]) -> dict[str, PARAM]:
-        int_vals = ["max_depth", "reg_alpha"]
-        return {k: int(v) if k in int_vals else v for k, v in params.items()}
+    def clean_int_params(
+        self, params: dict[str, PARAM]
+    ) -> dict[str, PARAM]:
+        int_vals = ['max_depth', 'reg_alpha']
+        return {
+            k: int(v) if k in int_vals else v
+            for k, v in params.items()
+        }
 
     def objective(self, params: dict[str, PARAM]) -> float:
         # I added this
@@ -64,7 +73,12 @@ class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
         current_params = {**self.best_params_, **params}
         self.model.set_params(**current_params)
         score = cross_val_score(
-            self.model, self.X, self.y, cv=self.cv, scoring=self.scoring, n_jobs=-1
+            self.model,
+            self.X,
+            self.y,
+            cv=self.cv,
+            scoring=self.scoring,
+            n_jobs=-1,
         )
         return -np.mean(score)
 
@@ -72,8 +86,12 @@ class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
         self.X = X
         self.y = y
 
-        for step, param_space in enumerate(self.param_space_sequence):
-            print(f"Optimizing step {step + 1}/{len(self.param_space_sequence)}")
+        for step, param_space in enumerate(
+            self.param_space_sequence
+        ):
+            print(
+                f'Optimizing step {step + 1}/{len(self.param_space_sequence)}'
+            )
 
             trials = Trials()
             best = fmin(
@@ -87,13 +105,19 @@ class StepwiseHyperoptOptimizer(BaseEstimator, MetaEstimatorMixin):
 
             step_best_params = space_eval(param_space, best)
             # I added this
-            step_best_params = self.clean_int_params(step_best_params)
+            step_best_params = self.clean_int_params(
+                step_best_params
+            )
             # END
             self.best_params_.update(step_best_params)
             self.best_score_ = -min(trials.losses())
 
-            print(f"Best parameters after step {step + 1}: {self.best_params_}")
-            print(f"Best score after step {step + 1}: {self.best_score_}")
+            print(
+                f'Best parameters after step {step + 1}: {self.best_params_}'
+            )
+            print(
+                f'Best score after step {step + 1}: {self.best_score_}'
+            )
 
         # Fit the model with the best parameters
         self.model.set_params(**self.best_params_)

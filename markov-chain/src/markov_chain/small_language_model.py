@@ -56,8 +56,8 @@ class SmallLanguageModel:
 if __name__ == "__main__":
     # Sample text for training
     sample_text = """
-    The quick brown fox jumps over the lazy dog. 
-    Sphinx of black quartz, judge my vow. 
+    The quick brown fox jumps over the lazy dog.
+    Sphinx of black quartz, judge my vow.
     Pack my box with five dozen liquor jugs.
     How vexingly quick daft zebras jump!
     The five boxing wizards jump quickly.

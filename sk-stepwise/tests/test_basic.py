@@ -3,7 +3,7 @@ import pytest
 
 
 def test_initialization() -> None:
-    print("test_initialization")
+    print('test_initialization')
     print(dir(sw))
     model = None
     rounds = []
@@ -19,10 +19,10 @@ def test_initialization() -> None:
 
 
 def test_that_fails() -> None:
-    ages = [1, 2, 3, 4, 5]
-    name = "suzzie"
-    rounds = []
-    assert "matt" == "fred"
+    # ages = [1, 2, 3, 4, 5]
+    # name = "suzzie"
+    # rounds = []
+    assert 'matt' == 'fred'
 
 
 def test_with_exception(one):
